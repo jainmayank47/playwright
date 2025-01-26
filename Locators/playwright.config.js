@@ -18,24 +18,50 @@ module.exports = defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   timeout: 30 * 1000,
+  retries: 1,
   expect: {
     
     timeout: 5000
   },
   
+  projects: [
+    {
+      name: "webkit",
+      use: {
+    
+        browserName: 'webkit',
+        headless: false,
+        screenshot: 'only-on-failure',
+        trace: 'on',
+        ...devices ["iPad Pro 11 landscape"]
+      }
+
+    },
+    {
+      name: "chrome",
+      use: {
+    
+        browserName: 'chromium',
+        headless: false,
+        screenshot: 'on',
+        trace: 'on',
+        permissions: ["geolocation"],
+        ignoreHTTPSErrors: true,
+        video: "retain-on-failure",
+        // launchOptions: {
+        //   // 1
+        //   args: ["--start-maximized"],
+        // },
+        viewport: {width:720, height:720}
+        // ...devices ["Desktop Chrome"]
+      }
+
+    }
+
+  ]
   
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    
-    browserName: 'chromium',
-    headless: false,
-    screenshot: 'on',
-    trace: 'on',
-    launchOptions: {
-      // 1
-      args: ["--start-maximized"],
-    },
-  }
+  
     
 });
 
